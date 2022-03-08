@@ -1,0 +1,16 @@
+@import "../../../assets/scss/variables.scss";
+
+.Toolbar {
+  .select {
+    color: white;
+    font-size: 14px;
+
+    .StyledBox {
+      background: $accent1;
+    }
+
+    &::placeholder {
+      color: white;
+    }
+  }
+}
