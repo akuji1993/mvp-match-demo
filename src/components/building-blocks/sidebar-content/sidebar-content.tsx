@@ -8,7 +8,7 @@ import { ReactComponent as LogoutIcon } from "../../../assets/images/logout.svg"
 
 export const SidebarContent = () => {
   return (
-    <Box pad="medium" gap="medium">
+    <Box pad={{ horizontal: "medium", vertical: "large" }} gap="medium">
       <GraphIcon />
       <SquaresIcon />
       <ComputerIcon />

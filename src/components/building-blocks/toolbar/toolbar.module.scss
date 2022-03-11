@@ -1,16 +1,36 @@
 @import "../../../assets/scss/variables.scss";
 
 .Toolbar {
-  .select {
-    color: white;
-    font-size: 14px;
+  display: flex;
+  justify-content: space-between;
 
-    .StyledBox {
-      background: $accent1;
+  .controls {
+    display: flex;
+    gap: 10px;
+
+    .select {
+      width: 135px;
+      max-width: 135px;
+      color: white;
+      font-size: 14px;
+      height: 32px;
+      max-height: 32px;
+
+      .StyledBox {
+        background: $accent1;
+      }
+
+      &::placeholder {
+        color: white;
+      }
     }
 
-    &::placeholder {
+    .button {
+      font-size: 14px;
+      height: 32px;
+      border-radius: 5px;
       color: white;
+      padding: 0 5px !important;
     }
   }
 }

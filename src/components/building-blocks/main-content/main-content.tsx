@@ -6,5 +6,5 @@ interface MainContentProps {
 }
 
 export const MainContent: FunctionComponent<MainContentProps> = (props) => {
-  return <Main>{props.children}</Main>;
+  return <Main pad="medium">{props.children}</Main>;
 };

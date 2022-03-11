@@ -1,13 +1,17 @@
 import { Box, Grommet, Main, Sidebar, ThemeType } from "grommet";
-import React from "react";
+import React, { useState } from "react";
 import { deepFreeze } from "grommet/utils";
 import {
+  EmptyState,
   Footer,
   Header,
   MainContent,
+  Report,
+  ReportData,
   SidebarContent,
   Toolbar,
 } from "./components";
+import styling from "./App.module.scss";
 
 export const customTheme: ThemeType = deepFreeze({
   global: {
@@ -46,16 +50,24 @@ export const customTheme: ThemeType = deepFreeze({
 });
 
 export const App = () => {
+  const [reportData, setReportData] = useState<ReportData>();
+
   return (
-    <Grommet theme={customTheme} full>
+    <Grommet className={styling.App} theme={customTheme} full>
       <Header />
-      <Box direction="row">
+      <Box className={styling.main} direction="row">
         <SidebarContent />
         <MainContent>
-          <Toolbar />
+          <Toolbar
+            onGenerateReport={(project, gateway, fromDate, toDate) =>
+              setReportData({ project, gateway, fromDate, toDate })
+            }
+          />
+          {!reportData && <EmptyState />}
+          {reportData && <Report reportData={reportData} />}
         </MainContent>
       </Box>
-      <Footer></Footer>
+      <Footer />
     </Grommet>
   );
 };

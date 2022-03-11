@@ -1,49 +1,74 @@
-import {
-  Box,
-  Button,
-  DateInput,
-  FormField,
-  Heading,
-  Select,
-  Text,
-} from "grommet";
-import React, { useEffect, useMemo, useState } from "react";
+import { Box, Button, Heading, Select, Text } from "grommet";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { api, Gateway, Project } from "../../../api";
+import { DateInput } from "../../controls";
 import styling from "./toolbar.module.scss";
 
-export const Toolbar = () => {
+interface ToolbarProps {
+  onGenerateReport: (
+    project: Project,
+    gateway: Gateway,
+    fromDate: Date,
+    toDate: Date
+  ) => void;
+}
+
+export const Toolbar: FunctionComponent<ToolbarProps> = ({
+  onGenerateReport,
+}) => {
   const projectResult = useQuery("projects", api.project.getProjects);
   const gatewayResult = useQuery("gateway", api.gateway.getGateways);
-  const [projects, setProjects] = useState<Project[] | undefined>();
-  const [gateways, setGateways] = useState<Gateway[] | undefined>();
-  const [selectedGateway, setSelectedGateway] = useState();
-  const [selectedProject, setSelectedProject] = useState();
+  const [projects, setProjects] = useState<Partial<Project>[] | undefined>();
+  const [gateways, setGateways] = useState<Partial<Gateway>[] | undefined>();
+  const [startDate, setStartDate] = useState<Date>();
+  const [endDate, setEndDate] = useState<Date>();
+  const [selectedGateway, setSelectedGateway] = useState<Gateway>();
+  const [selectedProject, setSelectedProject] = useState<Project>();
 
   useEffect(() => {
+    console.log(projectResult);
+
     if (projectResult.data) {
-      setProjects(projectResult.data.data);
+      setProjects([
+        { projectId: "ALL", name: "All Projects" },
+        ...projectResult.data.data,
+      ]);
     }
-  }, [projectResult]);
+  }, [projectResult.data]);
 
   useEffect(() => {
     if (gatewayResult.data) {
-      setGateways(gatewayResult.data.data);
+      setGateways([
+        { gatewayId: "ALL", name: "All Gateways" },
+        ...gatewayResult.data.data,
+      ]);
     }
-  }, [gatewayResult]);
+  }, [gatewayResult.data]);
+
+  const handleGenerateReport = () => {
+    if (selectedProject && selectedGateway && startDate && endDate) {
+      onGenerateReport(selectedProject, selectedGateway, startDate, endDate);
+    }
+  };
 
   return (
     <Box className={styling.Toolbar} direction="row">
       <Box>
-        <Heading level={2}>Reports</Heading>
-        <Text>Easily generate a report of your transactions</Text>
+        <Heading size="24px" level={3} margin={{ bottom: "4px" }}>
+          Reports
+        </Heading>
+        <Text size="16px" color="dark-2" weight={700}>
+          Easily generate a report of your transactions
+        </Text>
       </Box>
-      <Box direction="row" align="center">
+      <Box className={styling.controls} direction="row" align="center">
         {projects && (
           <Select
             className={styling.select}
             placeholder="Select Project"
             value={selectedProject}
+            onChange={({ option }) => setSelectedProject(option)}
             options={projects}
             valueKey="projectId"
             labelKey="name"
@@ -55,25 +80,27 @@ export const Toolbar = () => {
             placeholder="Select Gateway"
             value={selectedGateway}
             options={gateways}
+            onChange={({ option }) => setSelectedGateway(option)}
             valueKey="gatewayId"
             labelKey="name"
           />
         )}
-        <FormField label="von">
-          <DateInput
-            format="yyyy-mm-dd"
-            value={new Date().toISOString()}
-            onChange={({ value }) => {}}
-          />
-        </FormField>
-        <FormField label="bis">
-          <DateInput
-            format="yyyy-mm-dd"
-            value={new Date().toISOString()}
-            onChange={({ value }) => {}}
-          />
-        </FormField>
-        <Button label="Generate report" primary style={{ color: "white" }} />
+        <DateInput
+          placeholderLabel="From Date"
+          value={startDate}
+          onChange={(date) => setStartDate(date)}
+        />
+        <DateInput
+          placeholderLabel="To Date"
+          value={endDate}
+          onChange={(date) => setEndDate(date)}
+        />
+        <Button
+          className={styling.button}
+          label="Generate report"
+          primary
+          onClick={handleGenerateReport}
+        />
       </Box>
     </Box>
   );

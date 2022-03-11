@@ -1,0 +1,13 @@
+@import "../../../assets/scss/variables.scss";
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+.DateInput {
+  height: 32px;
+  background: $accent1;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 0 18px;
+}
