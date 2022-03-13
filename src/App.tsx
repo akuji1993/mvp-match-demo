@@ -1,5 +1,5 @@
-import { Box, Grommet, Main, Sidebar, ThemeType } from "grommet";
-import React, { useState } from "react";
+import { Box, Grommet, ThemeType } from "grommet";
+import React, { useEffect, useState } from "react";
 import { deepFreeze } from "grommet/utils";
 import {
   EmptyState,
@@ -7,11 +7,11 @@ import {
   Header,
   MainContent,
   Report,
-  ReportData,
   SidebarContent,
   Toolbar,
 } from "./components";
 import styling from "./App.module.scss";
+import { api, Gateway, Payment, Project } from "./api";
 
 export const customTheme: ThemeType = deepFreeze({
   global: {
@@ -48,9 +48,32 @@ export const customTheme: ThemeType = deepFreeze({
     },
   },
 });
+export interface ReportData {
+  project: Project;
+  gateway: Gateway;
+  fromDate: Date;
+  toDate: Date;
+}
 
 export const App = () => {
   const [reportData, setReportData] = useState<ReportData>();
+  const [payments, setPayments] = useState<Payment[]>();
+
+  useEffect(() => {
+    if (reportData) {
+      const { fromDate, toDate, project, gateway } = reportData;
+      api.report
+        .generateReport(
+          fromDate,
+          toDate,
+          project.projectId === "ALL" ? undefined : project.projectId,
+          gateway.gatewayId === "ALL" ? undefined : gateway.gatewayId
+        )
+        .then((res) => {
+          setPayments(res.data);
+        });
+    }
+  }, [reportData]);
 
   return (
     <Grommet className={styling.App} theme={customTheme} full>
@@ -64,7 +87,9 @@ export const App = () => {
             }
           />
           {!reportData && <EmptyState />}
-          {reportData && <Report reportData={reportData} />}
+          {reportData && payments && (
+            <Report reportData={reportData} payments={payments} />
+          )}
         </MainContent>
       </Box>
       <Footer />

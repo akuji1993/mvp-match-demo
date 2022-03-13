@@ -45,3 +45,19 @@ export interface GatewayResponse {
   data: Gateway[];
   error?: string;
 }
+
+export interface Payment {
+  paymentId: string;
+  amount: number;
+  projectId: string;
+  gatewayId: string;
+  userIds: string[];
+  modified: string;
+  created: string;
+}
+
+export interface ReportResponse {
+  code: string;
+  data: Payment[];
+  error?: string;
+}

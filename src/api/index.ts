@@ -1,6 +1,7 @@
 import { userApi } from "./user";
 import { gatewayApi } from "./gateway";
 import { projectApi } from "./project";
+import { reportApi } from "./report";
 
 export * from "./types";
 
@@ -10,4 +11,5 @@ export const api = {
   user: userApi,
   project: projectApi,
   gateway: gatewayApi,
+  report: reportApi,
 };

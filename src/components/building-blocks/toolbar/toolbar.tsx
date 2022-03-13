@@ -27,8 +27,6 @@ export const Toolbar: FunctionComponent<ToolbarProps> = ({
   const [selectedProject, setSelectedProject] = useState<Project>();
 
   useEffect(() => {
-    console.log(projectResult);
-
     if (projectResult.data) {
       setProjects([
         { projectId: "ALL", name: "All Projects" },
