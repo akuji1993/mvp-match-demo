@@ -1,0 +1,27 @@
+@import "../../../assets/scss/variables.scss";
+
+.AccordionLabel {
+  width: 100%;
+  padding: 26px 0 26px 26px;
+  color: $dark1;
+  background: white;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  > label {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 164.4%;
+  }
+
+  .name {
+    flex: 1;
+  }
+
+  .total {
+    text-align: end;
+    flex: 1;
+  }
+}

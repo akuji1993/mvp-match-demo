@@ -1,7 +1,9 @@
 import { Box, Button, Heading, Select, Text } from "grommet";
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import { useRecoilState } from "recoil";
 import { api, Gateway, Project } from "../../../api";
+import { gatewaysState, projectsState } from "../../../state-management/recoil";
 import { DateInput } from "../../controls";
 import styling from "./toolbar.module.scss";
 
@@ -19,8 +21,8 @@ export const Toolbar: FunctionComponent<ToolbarProps> = ({
 }) => {
   const projectResult = useQuery("projects", api.project.getProjects);
   const gatewayResult = useQuery("gateway", api.gateway.getGateways);
-  const [projects, setProjects] = useState<Partial<Project>[] | undefined>();
-  const [gateways, setGateways] = useState<Partial<Gateway>[] | undefined>();
+  const [projects, setProjects] = useRecoilState(projectsState);
+  const [gateways, setGateways] = useRecoilState(gatewaysState);
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const [selectedGateway, setSelectedGateway] = useState<Gateway>();

@@ -10,6 +10,10 @@ const generateReport = (
 ): Promise<ReportResponse> => {
   return fetch(`${baseUrl}/report`, {
     method: "POST",
+    headers: {
+      Accept: "application/json",
+      "content-type": "application/json",
+    },
     body: JSON.stringify({
       projectId: projectId ?? undefined,
       gatewayId: gatewayId ?? undefined,

@@ -47,6 +47,16 @@ export const customTheme: ThemeType = deepFreeze({
       },
     },
   },
+  accordion: {
+    border: {
+      style: "hidden",
+    },
+    panel: {
+      border: {
+        style: "hidden",
+      },
+    },
+  },
 });
 export interface ReportData {
   project: Project;

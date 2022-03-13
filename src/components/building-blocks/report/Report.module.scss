@@ -1,0 +1,48 @@
+@import "../../../assets/scss/variables.scss";
+
+.Report {
+  display: flex;
+  flex-direction: column;
+  padding: 18px 24px;
+  background: $background-color;
+  margin-top: 25px;
+
+  &__wrap {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .content {
+    flex: 1 1 100%;
+
+    > label {
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: $dark1;
+    }
+
+    &__half {
+      flex: 1 1 50%;
+    }
+
+    .accordion {
+      padding: 34px 0;
+
+      .accordionPanel {
+        background: white;
+      }
+    }
+  }
+
+  .graph {
+    display: none;
+
+    &__show {
+      display: flex;
+    }
+  }
+
+  .footer {
+  }
+}
