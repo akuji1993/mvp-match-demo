@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { Box, Button, Heading, Select, Text } from "grommet";
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { useQuery } from "react-query";
@@ -23,8 +24,8 @@ export const Toolbar: FunctionComponent<ToolbarProps> = ({
   const gatewayResult = useQuery("gateway", api.gateway.getGateways);
   const [projects, setProjects] = useRecoilState(projectsState);
   const [gateways, setGateways] = useRecoilState(gatewaysState);
-  const [startDate, setStartDate] = useState<Date>();
-  const [endDate, setEndDate] = useState<Date>();
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [endDate, setEndDate] = useState<Date>(new Date());
   const [selectedGateway, setSelectedGateway] = useState<Gateway>();
   const [selectedProject, setSelectedProject] = useState<Project>();
 

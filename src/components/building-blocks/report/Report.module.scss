@@ -2,10 +2,8 @@
 
 .Report {
   display: flex;
-  flex-direction: column;
-  padding: 18px 24px;
-  background: $background-color;
   margin-top: 25px;
+  flex-wrap: wrap;
 
   &__wrap {
     flex-direction: row;
@@ -13,7 +11,14 @@
   }
 
   .content {
-    flex: 1 1 100%;
+    padding: 18px 24px;
+    background: $background-color;
+    flex: 0 0 100%;
+    border-radius: 10px;
+
+    &__half {
+      flex: 0 0 calc(50% - 49px);
+    }
 
     > label {
       font-weight: 700;
@@ -22,27 +27,71 @@
       color: $dark1;
     }
 
-    &__half {
-      flex: 1 1 50%;
-    }
-
     .accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
       padding: 34px 0;
 
       .accordionPanel {
         background: white;
       }
+
+      .table {
+        thead {
+          background: white;
+        }
+
+        tbody {
+          tr:nth-child(2n) {
+            background: white;
+          }
+        }
+      }
     }
   }
 
   .graph {
-    display: none;
+    display: flex;
+    flex: 0 0 calc(50% - 40px);
+    flex-direction: column;
 
-    &__show {
+    .legend {
       display: flex;
+      background: $background-color;
+      padding: 20px;
+      margin-left: 20px;
+      width: calc(100% - 20px);
+      gap: 36px;
+
+      .entry {
+        display: flex;
+
+        .colorDot {
+          width: 15px;
+          height: 15px;
+          border-radius: 5px;
+        }
+
+        .label {
+          padding-left: 12px;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 16px;
+        }
+      }
     }
   }
 
   .footer {
+    flex: 1 1 100%;
+    border-radius: 10px;
+    margin-top: 27px;
+    padding: 17px 19px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: $dark1;
+    background: $background-color;
   }
 }

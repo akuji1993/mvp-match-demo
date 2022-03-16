@@ -13,7 +13,7 @@ export const AccordionLabel: FunctionComponent<AccordionLabelProps> = ({
   return (
     <div className={styling.AccordionLabel}>
       <label className={styling.name}>{label}</label>
-      <label className={styling.total}>TOTAL: {total} USD</label>
+      <label className={styling.total}>TOTAL: {total?.toFixed(2)} USD</label>
     </div>
   );
 };
